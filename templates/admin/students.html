@@ -1,0 +1,323 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Student Management System
+{% endblock %}
+
+{% block page_title %}
+Student Management System
+{% endblock %}
+
+{% block sidebar %}
+    <ul>
+
+        <li>
+            <a href="{{ url_for('admin.dashboard') }}">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('student_management.students') }}">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </a>
+        </li>
+
+        <li>
+        <a href="{{ url_for('teacher_management.teachers') }}">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            Teachers
+        </a>
+    </li>
+
+        <li>
+            <a href="{{ url_for('admin.analytics') }}">
+                <i class="fa-solid fa-chart-column"></i>
+                Analytics
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('auth.logout') }}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+{% endblock %}
+{% block content %}
+
+<div class="page-header">
+
+    <h2>Student Details</h2>
+</div>
+<div class="toolbar">
+
+    <a href="{{ url_for('student_management.add_student') }}" class="btn-primary">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Add Student
+
+    </a>
+
+</div>
+<form method="GET" class="toolbar">
+
+    <select name="department" class="search-box">
+
+        <option value="">All Departments</option>
+
+        {% for dept in departments %}
+
+        <option
+            value="{{ dept.id }}"
+            {% if department == dept.id|string %}selected{% endif %}>
+
+            {{ dept.department_name }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <select name="semester" class="search-box">
+
+        <option value="">Semester</option>
+
+        {% for i in range(1,9) %}
+
+        <option
+            value="{{ i }}"
+            {% if semester == i|string %}selected{% endif %}>
+
+            {{ i }}
+
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+    <button
+        type="submit"
+        class="btn-primary">
+
+        Search
+
+    </button>
+
+</form>
+<table class="student-table">
+
+    <thead>
+    <tr>
+        <th>Profile</th>
+        <th>Student ID</th>
+        <th>Name</th>
+        <th>Department</th>
+        <th>Semester</th>
+        <th>CGPA</th>
+        <th>Attendance</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+{% for student in students.items %}
+
+<tr>
+
+    <td>
+
+        <div class="avatar">
+
+            {{ student.first_name[0] }}{{ student.last_name[0] }}
+
+        </div>
+
+    </td>
+
+    <td>{{ student.student_id }}</td>
+
+    <td>
+
+        {{ student.first_name }}
+        {{ student.last_name }}
+
+    </td>
+
+    <td>
+
+        <span class="badge">
+
+            {{ student.department.department_code }}
+
+        </span>
+
+    </td>
+
+    <td>{{ student.semester }}</td>
+
+    <td>
+
+        {% if student.cgpa >= 9 %}
+
+            <span class="cgpa excellent">
+
+                {{ student.cgpa }}
+
+            </span>
+
+        {% elif student.cgpa >= 8 %}
+
+            <span class="cgpa good">
+
+                {{ student.cgpa }}
+
+            </span>
+
+        {% else %}
+
+            <span class="cgpa average">
+
+                {{ student.cgpa }}
+
+            </span>
+
+        {% endif %}
+
+    </td>
+
+    <td>
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                style="width:{{ student.attendance }}%;">
+
+            </div>
+
+        </div>
+
+        {{ student.attendance }}%
+
+    </td>
+
+    <td>
+
+        <a href="#" class="action-btn view">
+
+            <i class="fa-solid fa-eye"></i>
+
+        </a>
+
+        <a href="{{ url_for('student_management.edit_student', id=student.id) }}"
+           class="action-btn edit">
+
+            <i class="fa-solid fa-pen"></i>
+
+        </a>
+
+        <a href="{{ url_for('student_management.delete_student', id=student.id) }}"
+           class="action-btn delete"
+           onclick="return confirm('Delete this student?')">
+
+            <i class="fa-solid fa-trash"></i>
+
+        </a>
+
+    </td>
+
+</tr>
+
+{% else %}
+
+<tr>
+
+    <td colspan="8">
+
+        No students found.
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+<div class="pagination">
+
+    {% if students.has_prev %}
+
+    <a href="{{ url_for(
+        'student_management.students',
+        page=students.prev_num,
+        search=search,
+        department=department,
+        semester=semester
+    ) }}">
+        Previous
+    </a>
+
+    {% endif %}
+
+    {% for page_num in students.iter_pages() %}
+
+        {% if page_num %}
+
+            {% if page_num == students.page %}
+
+                <span class="active-page">
+
+                    {{ page_num }}
+
+                </span>
+
+            {% else %}
+
+                <a href="{{ url_for(
+                    'student_management.students',
+                    page=page_num,
+                    search=search,
+                    department=department,
+                    semester=semester
+                ) }}">
+
+                    {{ page_num }}
+
+                </a>
+
+            {% endif %}
+
+        {% endif %}
+
+    {% endfor %}
+
+    {% if students.has_next %}
+
+    <a href="{{ url_for(
+        'student_management.students',
+        page=students.next_num,
+        search=search,
+        department=department,
+        semester=semester
+    ) }}">
+
+        Next
+
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,582 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+
+Analytics
+
+{% endblock %}
+
+{% block page_title %}
+
+Analytics Dashboard
+
+{% endblock %}
+
+{% block sidebar %}
+    <ul>
+
+        <li>
+            <a href="{{ url_for('admin.dashboard') }}">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('student_management.students') }}">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </a>
+        </li>
+
+        <li>
+        <a href="{{ url_for('teacher_management.teachers') }}">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            Teachers
+        </a>
+    </li>
+
+        <li>
+            <a href="{{ url_for('admin.analytics') }}">
+                <i class="fa-solid fa-chart-column"></i>
+                Analytics
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('auth.logout') }}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+{% endblock %}
+{% block content %}
+
+<div class="kpi-grid">
+
+    <div class="kpi-card">
+        <h2 id="studentsCount">0</h2>
+        <p>Total Students</p>
+    </div>
+
+    <div class="kpi-card">
+        <h2 id="teachersCount">0</h2>
+        <p>Total Teachers</p>
+    </div>
+
+    <div class="kpi-card">
+        <h2 id="departmentsCount">0</h2>
+        <p>Departments</p>
+    </div>
+
+    <div class="kpi-card">
+        <h2 id="cgpaAverage">0</h2>
+        <p>Average CGPA</p>
+    </div>
+
+    <div class="kpi-card">
+        <h2 id="attendanceAverage">0%</h2>
+        <p>Average Attendance</p>
+    </div>
+
+</div>
+<div class="charts-grid">
+
+    <div class="chart-card">
+
+        <h3>Students by Department</h3>
+
+        <canvas id="departmentChart"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h3>Gender Distribution</h3>
+
+        <canvas id="genderChart"></canvas>
+
+    </div>
+
+</div>
+
+<div class="charts-grid">
+
+    <div class="chart-card">
+
+        <h3>Semester Distribution</h3>
+
+        <canvas id="semesterChart"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h3>Attendance Analysis</h3>
+
+        <canvas id="attendanceChart"></canvas>
+
+    </div>
+
+</div>
+<div class="charts-grid">
+
+    <div class="chart-card">
+
+        <h3>Average CGPA by Department</h3>
+
+        <canvas id="cgpaChart"></canvas>
+
+    </div>
+
+</div>
+<div class="charts-grid">
+
+    <div class="chart-card">
+
+        <h3>Student Performance Distribution</h3>
+
+        <canvas id="performanceChart"></canvas>
+
+    </div>
+
+</div>
+<div class="leaderboard-card">
+
+    <h2>🏆 Top 10 Students</h2>
+
+    <table class="leaderboard-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Rank</th>
+
+                <th>Student ID</th>
+
+                <th>Department</th>
+
+                <th>CGPA</th>
+
+                <th>Attendance</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="leaderboardBody">
+
+        </tbody>
+
+    </table>
+
+</div>
+<div class="leaderboard-card">
+
+    <h2>⚠️ At-Risk Students</h2>
+
+    <table class="leaderboard-table">
+
+        <thead>
+
+            <tr>
+
+                <th>Student ID</th>
+
+                <th>Department</th>
+
+                <th>Attendance</th>
+
+                <th>CGPA</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="riskTable">
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script>
+
+async function loadDepartmentChart() {
+
+    const response = await fetch("/api/analytics/departments");
+
+    const data = await response.json();
+
+    new Chart(document.getElementById("departmentChart"), {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: data.labels,
+
+            datasets: [{
+
+                label: "Students",
+
+                data: data.values,
+
+                borderWidth: 1
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+loadDepartmentChart();
+async function loadGenderChart() {
+
+    const response = await fetch("/api/analytics/gender");
+
+    const data = await response.json();
+
+    new Chart(document.getElementById("genderChart"), {
+
+        type: "doughnut",
+
+        data: {
+
+            labels: data.labels,
+
+            datasets: [{
+
+                data: data.values
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true
+
+        }
+
+    });
+
+}
+
+loadGenderChart();
+async function loadSemesterChart() {
+
+    const response = await fetch("/api/analytics/semester");
+
+    const data = await response.json();
+
+    new Chart(document.getElementById("semesterChart"), {
+
+        type: "bar",
+
+        data: {
+
+            labels: data.labels,
+
+            datasets: [{
+
+                label: "Students",
+
+                data: data.values
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+loadSemesterChart();
+async function loadAttendanceChart() {
+
+    const response = await fetch("/api/analytics/attendance");
+    const data = await response.json();
+
+    console.log(data);   // Add this line
+
+    new Chart(document.getElementById("attendanceChart"), {
+        type: "line",
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: "Average Attendance",
+                data: data.values,
+                tension: 0.3,
+                fill: false
+            }]
+        }
+    });
+
+}
+
+loadAttendanceChart();
+
+async function loadCgpaChart() {
+
+    const response = await fetch("/api/analytics/cgpa");
+
+    const data = await response.json();
+
+    new Chart(document.getElementById("cgpaChart"), {
+
+        type: "bar",
+
+        data: {
+
+            labels: data.labels,
+
+            datasets: [{
+
+                label: "Average CGPA",
+
+                data: data.values
+
+            }]
+
+        },
+
+        options: {
+
+            indexAxis: "y",
+
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+            scales: {
+
+                x: {
+
+                    min: 0,
+
+                    max: 10
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+loadCgpaChart();
+
+async function loadPerformanceChart(){
+
+    const response = await fetch("/api/analytics/performance");
+
+    const data = await response.json();
+
+    new Chart(document.getElementById("performanceChart"),{
+
+        type:"bar",
+
+        data:{
+
+            labels:data.labels,
+
+            datasets:[{
+
+                data:data.values
+
+            }]
+
+        },
+
+        options:{
+
+            responsive:true,
+
+            plugins:{
+
+                legend:{
+
+                    position:"bottom"
+
+                }
+
+            }
+
+        }
+
+    });
+
+}
+
+loadPerformanceChart();
+async function loadKPI() {
+
+    const response = await fetch("/api/analytics/kpi");
+
+    const data = await response.json();
+
+    document.getElementById("studentsCount").innerText = data.students;
+
+    document.getElementById("teachersCount").innerText = data.teachers;
+
+    document.getElementById("departmentsCount").innerText = data.departments;
+
+    document.getElementById("cgpaAverage").innerText = data.cgpa;
+
+    document.getElementById("attendanceAverage").innerText =
+        data.attendance + "%";
+
+}
+
+loadKPI();
+
+async function loadLeaderboard(){
+
+    const response = await fetch("/api/analytics/top_students");
+
+    const students = await response.json();
+
+    const tbody = document.getElementById("leaderboardBody");
+
+    tbody.innerHTML = "";
+
+    students.forEach((student,index)=>{
+
+        let medal = index + 1;
+
+        if(index===0) medal="🥇";
+        if(index===1) medal="🥈";
+        if(index===2) medal="🥉";
+
+        tbody.innerHTML += `
+
+        <tr>
+
+            <td>${medal}</td>
+
+            <td>${student.student_id}</td>
+
+            <td>${student.department}</td>
+
+            <td>${student.cgpa}</td>
+
+            <td>${student.attendance}%</td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+loadLeaderboard();
+async function loadRiskStudents(){
+
+    const response = await fetch("/api/analytics/at_risk");
+
+    const students = await response.json();
+
+    const table = document.getElementById("riskTable");
+
+    table.innerHTML = "";
+
+    students.forEach(student=>{
+
+        const badge = student.status === "Critical"
+            ? "<span class='badge-danger'>Critical</span>"
+            : "<span class='badge-warning'>Warning</span>";
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${student.student_id}</td>
+
+            <td>${student.department}</td>
+
+            <td>${student.attendance}%</td>
+
+            <td>${student.cgpa}</td>
+
+            <td>${badge}</td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+loadRiskStudents();
+
+
+</script>
+
+{% endblock %}

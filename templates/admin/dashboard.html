@@ -1,0 +1,194 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block page_title %}
+Dashboard
+{% endblock %}
+
+{% block sidebar %}
+    <ul>
+
+        <li>
+            <a href="{{ url_for('admin.dashboard') }}">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('student_management.students') }}">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </a>
+        </li>
+
+        <li>
+        <a href="{{ url_for('teacher_management.teachers') }}">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            Teachers
+        </a>
+    </li>
+
+        <li>
+            <a href="{{ url_for('admin.analytics') }}">
+                <i class="fa-solid fa-chart-column"></i>
+                Analytics
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('auth.logout') }}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+{% endblock %}
+
+{% block content %}
+
+<div class="stats-grid">
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-user-graduate"></i>
+
+        <h2>{{ stats.students }}</h2>
+
+        <p>Total Students</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-chalkboard-user"></i>
+
+        <h2>{{ stats.teachers }}</h2>
+
+        <p>Total Teachers</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-building"></i>
+
+        <h2>{{ stats.departments }}</h2>
+
+        <p>Departments</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <h2>{{ stats.attendance }}%</h2>
+
+        <p>Attendance</p>
+
+    </div>
+
+    <div class="stat-card">
+
+        <i class="fa-solid fa-graduation-cap"></i>
+
+        <h2>{{ stats.cgpa }}</h2>
+
+        <p>Average CGPA</p>
+
+    </div>
+
+</div>
+
+<div class="chart-grid">
+
+    <div class="chart-card">
+
+        <h3>Student Growth</h3>
+
+        <canvas id="studentChart"></canvas>
+
+    </div>
+
+    <div class="chart-card">
+
+        <h3>Department Distribution</h3>
+
+        <canvas id="departmentChart"></canvas>
+
+    </div>
+
+</div>
+
+<div class="table-card">
+
+    <h3>Recent Students</h3>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Name</th>
+
+                <th>Department</th>
+
+                <th>CGPA</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td>ST001</td>
+
+                <td>Rahul Sharma</td>
+
+                <td>CSE</td>
+
+                <td>8.7</td>
+
+            </tr>
+
+            <tr>
+
+                <td>ST002</td>
+
+                <td>Priya Singh</td>
+
+                <td>AI & DS</td>
+
+                <td>9.1</td>
+
+            </tr>
+
+            <tr>
+
+                <td>ST003</td>
+
+                <td>Aman Verma</td>
+
+                <td>ECE</td>
+
+                <td>8.4</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

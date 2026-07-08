@@ -1,0 +1,115 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block content %}
+
+<h1>Add Teacher</h1>
+
+<form method="POST" class="form-card">
+
+<div class="form-grid">
+
+<div>
+<label>Teacher ID</label>
+<input type="text" name="teacher_id" required>
+</div>
+
+<div>
+<label>First Name</label>
+<input type="text" name="first_name" required>
+</div>
+
+<div>
+<label>Last Name</label>
+<input type="text" name="last_name" required>
+</div>
+
+<div>
+<label>Email</label>
+<input type="email" name="email" required>
+</div>
+
+<div>
+<label>Phone</label>
+<input type="text" name="phone" required>
+</div>
+
+<div>
+<label>Password</label>
+<input type="password" name="password" required>
+</div>
+
+<div>
+<label>Gender</label>
+
+<select name="gender" required>
+
+<option value="Male">Male</option>
+
+<option value="Female">Female</option>
+
+<option value="Other">Other</option>
+
+</select>
+
+</div>
+
+<div>
+<label>Department</label>
+
+<select name="department_id" required>
+
+{% for dept in departments %}
+
+<option value="{{ dept.id }}">
+
+{{ dept.department_name }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div>
+<label>Designation</label>
+<input type="text" name="designation" required>
+</div>
+
+<div>
+<label>Qualification</label>
+<input type="text" name="qualification" required>
+</div>
+
+<div>
+<label>Joining Date</label>
+<input type="date" name="joining_date" required>
+</div>
+
+<div>
+<label>Status</label>
+
+<select name="status">
+
+<option value="Active">Active</option>
+
+<option value="Inactive">Inactive</option>
+
+</select>
+
+</div>
+
+</div>
+
+<br>
+
+<button type="submit" class="btn-primary">
+
+Save Teacher
+
+</button>
+
+</form>
+
+{% endblock %}
