@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+Choose Portal
+{% endblock %}
+
+{% block content %}
+
+<section class="portal-page">
+
+    <div class="portal-header">
+
+        <h1>Smart Student Analytics Platform</h1>
+
+        <p>Select your portal to continue</p>
+
+    </div>
+
+    <div class="portal-grid">
+
+        <a href="/login/admin" class="portal-card admin">
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            <h2>Administrator</h2>
+
+            <p>
+
+                Complete access to students,
+                teachers,
+                reports,
+                and analytics.
+
+            </p>
+
+            <span>Continue →</span>
+
+        </a>
+
+        <a href="#" class="portal-card teacher">
+
+            <i class="fa-solid fa-chalkboard-user"></i>
+
+            <h2>Teacher</h2>
+
+            <p>
+
+                Manage attendance,
+                marks,
+                and student performance.
+
+            </p>
+
+            <span>Continue →</span>
+
+        </a>
+
+        <a href="#" class="portal-card student">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            <h2>Student</h2>
+
+            <p>
+
+                View profile,
+                attendance,
+                grades,
+                and reports.
+
+            </p>
+
+            <span>Continue →</span>
+
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

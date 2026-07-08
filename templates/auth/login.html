@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ data.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="login-page">
+
+    <div class="login-card">
+
+        <div class="login-header">
+
+            <i class="fa-solid {{ data.icon }}"></i>
+
+            <h2>{{ data.title }}</h2>
+
+            <p>Welcome back! Please sign in to continue.</p>
+
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+
+{% if messages %}
+
+    {% for category, message in messages %}
+
+        <div class="alert alert-danger">
+
+            {{ message }}
+
+        </div>
+
+    {% endfor %}
+
+{% endif %}
+
+{% endwith %}
+        <form method="POST">
+
+    <div class="form-group">
+
+        {% if role == "admin" %}
+    {% set login_label = "Username" %}
+    {% set login_placeholder = "Enter username" %}
+{% elif role == "teacher" %}
+    {% set login_label = "Teacher ID" %}
+    {% set login_placeholder = "Enter Teacher ID" %}
+{% else %}
+    {% set login_label = "Student ID" %}
+    {% set login_placeholder = "Enter Student ID" %}
+{% endif %}
+
+<label>{{ login_label }}</label>
+
+<input
+    type="text"
+    name="username"
+    class="form-control"
+    placeholder="{{ login_placeholder }}"
+    required>
+    </div>
+
+    <div class="form-group">
+
+        <label>Password</label>
+
+        <div class="password-box">
+
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+
+            <button
+                type="button"
+                id="togglePassword"
+                class="password-toggle">
+
+                <i class="fa-solid fa-eye"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="login-options">
+
+        <label>
+
+            <input type="checkbox">
+
+            Remember Me
+
+        </label>
+
+        <a href="#">Forgot Password?</a>
+
+    </div>
+
+    <button class="btn btn-primary">
+
+        Login
+
+    </button>
+
+</form>
+
+    </div>
+
+</div>
+
+{% endblock %}
