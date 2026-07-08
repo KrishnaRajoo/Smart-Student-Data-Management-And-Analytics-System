@@ -1,0 +1,530 @@
+{% extends "base.html" %}
+
+{% block title %}
+Smart Student Analytics
+{% endblock %}
+
+{% block content %}
+
+<nav class="navbar">
+
+<div class="logo">
+
+<i class="fa-solid fa-chart-column"></i>
+
+<span>Student Analytics</span>
+
+</div>
+
+<ul>
+
+<li><a href="#">Home</a></li>
+
+<li><a href="#">About</a></li>
+
+<li><a href="#">Features</a></li>
+
+<li><a href="#">Contact</a></li>
+
+</ul>
+
+<a href="/login" class="login-btn">
+
+Login
+
+</a>
+
+</nav>
+
+<section class="hero">
+
+<div class="hero-left">
+
+<h1>
+
+Smart Student Data Management &
+Analytics System
+
+</h1>
+
+<p>
+
+A modern platform to manage students,
+analyze academic performance,
+generate reports,
+and visualize educational data.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="#" class="primary-btn">
+
+Get Started
+
+</a>
+
+<a href="#" class="secondary-btn">
+
+Learn More
+
+</a>
+
+</div>
+
+</div>
+
+<div class="hero-right">
+
+<div class="circle"></div>
+
+</div>
+
+</section>
+<!-- ================= FEATURES ================= -->
+
+<section class="features">
+
+    <h2>Powerful Features</h2>
+
+    <p class="section-text">
+
+        Everything you need to manage, analyze, and visualize
+        student data from one modern platform.
+
+    </p>
+
+    <div class="feature-grid">
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            <h3>Student Management</h3>
+
+            <p>
+                Add, update, search and organize student records efficiently.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-chalkboard-user"></i>
+
+            <h3>Teacher Management</h3>
+
+            <p>
+                Manage teachers, departments and permissions securely.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>Analytics Dashboard</h3>
+
+            <p>
+                Interactive charts and statistics for smarter academic decisions.
+            </p>
+
+        </div>
+
+        <div class="feature-card">
+
+            <i class="fa-solid fa-file-export"></i>
+
+            <h3>Reports</h3>
+
+            <p>
+                Export reports in PDF, Excel and CSV within seconds.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= STATISTICS ================= -->
+
+<section class="stats">
+
+    <h2>Platform Statistics</h2>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-user-graduate"></i>
+
+            <h3 class="counter" data-target="1500">0</h3>
+
+            <p>Students</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-chalkboard-user"></i>
+
+            <h3 class="counter" data-target="85">0</h3>
+
+            <p>Teachers</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-building-columns"></i>
+
+            <h3 class="counter" data-target="12">0</h3>
+
+            <p>Departments</p>
+
+        </div>
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-shield-halved"></i>
+
+            <h3 class="counter" data-target="99">0</h3>
+
+            <p>Data Security (%)</p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= DASHBOARD PREVIEW ================= -->
+
+<section class="dashboard-preview">
+
+    <div class="preview-left">
+
+        <h2>
+            Experience the Dashboard
+        </h2>
+
+        <p>
+
+            Gain complete visibility into student records,
+            teacher management,
+            academic insights,
+            attendance,
+            and reports through one powerful analytics dashboard.
+
+        </p>
+
+        <a href="#" class="primary-btn">
+
+            Explore Dashboard
+
+        </a>
+
+    </div>
+
+    <div class="preview-right">
+
+        <div class="dashboard-card">
+
+    <div class="mock-sidebar">
+
+        <h3>Analytics</h3>
+
+        <ul>
+
+            <li><i class="fa-solid fa-house"></i> Overview</li>
+
+            <li><i class="fa-solid fa-user-graduate"></i> Students</li>
+
+            <li><i class="fa-solid fa-chalkboard-user"></i> Teachers</li>
+
+            <li><i class="fa-solid fa-chart-line"></i> Analytics</li>
+
+            <li><i class="fa-solid fa-file-lines"></i> Reports</li>
+
+            <li><i class="fa-solid fa-gear"></i> Settings</li>
+
+            <li><i class="fa-solid fa-right-from-bracket"></i> Logout</li>
+
+        </ul>
+
+    </div>
+
+    <div class="mock-main">
+
+        <h2>Welcome Back, Admin 👋</h2>
+
+        <div class="mock-cards">
+
+            <div class="mock-card">
+
+                <span>Students</span>
+
+                <h3>1500</h3>
+
+            </div>
+
+            <div class="mock-card">
+
+                <span>Teachers</span>
+
+                <h3>85</h3>
+
+            </div>
+
+            <div class="mock-card">
+
+                <span>Attendance</span>
+
+                <h3>91%</h3>
+
+            </div>
+
+            <div class="mock-card">
+
+                <span>Average CGPA</span>
+
+                <h3>8.41</h3>
+
+            </div>
+
+        </div>
+
+        <div class="fake-chart">
+
+            <div class="line"></div>
+
+        </div>
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Department</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>ST101</td>
+
+                    <td>Rahul</td>
+
+                    <td>CSE</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>ST102</td>
+
+                    <td>Priya</td>
+
+                    <td>ECE</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>ST103</td>
+
+                    <td>Arjun</td>
+
+                    <td>AI & DS</td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+    </div>
+
+</section>
+<!-- ================= WHY CHOOSE US ================= -->
+
+<section class="why-us">
+
+    <h2>Why Choose Smart Student Analytics?</h2>
+
+    <p class="section-text">
+
+        Designed to simplify student data management while providing
+        powerful analytics for institutions and educators.
+
+    </p>
+
+    <div class="why-grid">
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-lock"></i>
+
+            <h3>Secure Authentication</h3>
+
+            <p>
+                Role-based login for Admin, Teachers and Students with
+                encrypted passwords.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-chart-pie"></i>
+
+            <h3>Real-Time Analytics</h3>
+
+            <p>
+                Instantly visualize attendance, academic performance,
+                and departmental statistics.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Performance</h3>
+
+            <p>
+                Optimized backend with quick data retrieval and smooth
+                user experience.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+            <h3>Interactive Charts</h3>
+
+            <p>
+                Beautiful dashboards powered by charts and data
+                visualization.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-cloud"></i>
+
+            <h3>Cloud Ready</h3>
+
+            <p>
+                Easily deploy to Render with a cloud-hosted MySQL
+                database.
+            </p>
+
+        </div>
+
+        <div class="why-card">
+
+            <i class="fa-solid fa-file-pdf"></i>
+
+            <h3>Smart Reports</h3>
+
+            <p>
+                Generate PDF, Excel and CSV reports with a single click.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+<!-- ================= PLATFORM HIGHLIGHTS ================= -->
+
+<section class="highlights">
+
+    <div class="highlights-heading">
+
+        <h2>Built for Modern Educational Institutions</h2>
+
+        <p>
+
+            Our platform combines modern web technologies,
+            secure architecture,
+            analytics,
+            and responsive design to create an outstanding experience.
+
+        </p>
+
+    </div>
+
+    <div class="highlight-grid">
+
+        <div class="highlight-box">
+
+            <i class="fa-solid fa-bolt"></i>
+
+            <h3>Fast Processing</h3>
+
+        </div>
+
+        <div class="highlight-box">
+
+            <i class="fa-solid fa-lock"></i>
+
+            <h3>Secure Architecture</h3>
+
+        </div>
+
+        <div class="highlight-box">
+
+            <i class="fa-solid fa-mobile-screen-button"></i>
+
+            <h3>Responsive Design</h3>
+
+        </div>
+
+        <div class="highlight-box">
+
+            <i class="fa-solid fa-chart-simple"></i>
+
+            <h3>Advanced Analytics</h3>
+
+        </div>
+
+        <div class="highlight-box">
+
+            <i class="fa-solid fa-cloud"></i>
+
+            <h3>Cloud Ready</h3>
+
+        </div>
+
+        <div class="highlight-box">
+
+            <i class="fa-solid fa-file-lines"></i>
+
+            <h3>Smart Reports</h3>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
