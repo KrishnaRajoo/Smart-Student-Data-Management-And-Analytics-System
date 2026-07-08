@@ -1,0 +1,115 @@
+/* =======================================
+   LOGIN SELECTION PAGE
+======================================= */
+
+.portal-page{
+
+    min-height:100vh;
+
+    padding:120px 8%;
+
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+
+.portal-header{
+
+    text-align:center;
+
+    color:white;
+
+    margin-bottom:70px;
+
+}
+
+.portal-header h1{
+
+    font-size:52px;
+
+    margin-bottom:15px;
+
+}
+
+.portal-header p{
+
+    font-size:20px;
+
+    opacity:.9;
+
+}
+
+.portal-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:35px;
+
+}
+
+.portal-card{
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:25px;
+
+    padding:45px 35px;
+
+    color:white;
+
+    text-decoration:none;
+
+    transition:.35s;
+
+    border:1px solid rgba(255,255,255,.2);
+
+}
+
+.portal-card:hover{
+
+    transform:translateY(-12px);
+
+    background:rgba(255,255,255,.22);
+
+}
+
+.portal-card i{
+
+    font-size:60px;
+
+    margin-bottom:25px;
+
+}
+
+.portal-card h2{
+
+    margin-bottom:20px;
+
+    font-size:30px;
+
+}
+
+.portal-card p{
+
+    line-height:30px;
+
+    margin-bottom:35px;
+
+}
+
+.portal-card span{
+
+    font-weight:600;
+
+    font-size:18px;
+
+}
