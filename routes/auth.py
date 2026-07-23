@@ -133,4 +133,4 @@ def logout():
 
     session.clear()
 
-    return render_template("auth/login_selection.html")
+    return render_template("index.html")
