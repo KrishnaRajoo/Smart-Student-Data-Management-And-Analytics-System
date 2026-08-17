@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Portal{% endblock %} | SSAS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+<div class="student-shell">
+    <aside class="student-sidebar">
+        <div class="student-brand">
+            <i class="fa-solid fa-user-graduate"></i>
+            <div><strong>SSAS</strong><small>Student Portal</small></div>
+        </div>
+
+        <div class="student-user">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div><strong>{{ student.full_name }}</strong><small>{{ student.student_id }}</small></div>
+        </div>
+
+        <nav class="student-nav">
+            <a class="{% if request.endpoint == 'student.dashboard' %}active{% endif %}" href="{{ url_for('student.dashboard') }}">
+                <i class="fa-solid fa-house"></i><span>Dashboard</span>
+            </a>
+            <a class="{% if request.endpoint == 'student.performance' %}active{% endif %}" href="{{ url_for('student.performance') }}">
+                <i class="fa-solid fa-chart-line"></i><span>My Performance</span>
+            </a>
+            <a class="{% if request.endpoint == 'student.attendance' %}active{% endif %}" href="{{ url_for('student.attendance') }}">
+                <i class="fa-solid fa-calendar-check"></i><span>Attendance</span>
+            </a>
+            <a class="{% if request.endpoint == 'student.academic_records' %}active{% endif %}" href="{{ url_for('student.academic_records') }}">
+                <i class="fa-solid fa-book-open"></i><span>Academic Records</span>
+            </a>
+            <a class="{% if request.endpoint == 'student.profile' %}active{% endif %}" href="{{ url_for('student.profile') }}">
+                <i class="fa-solid fa-user-circle"></i><span>My Profile</span>
+            </a>
+        </nav>
+
+        <a class="student-logout" href="{{ url_for('auth.logout') }}">
+            <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+        </a>
+    </aside>
+
+    <main class="student-main">
+        <header class="student-topbar">
+            <div>
+                <h1>{% block page_title %}Dashboard{% endblock %}</h1>
+                <p>{{ student.department.department_name }}</p>
+            </div>
+            <div class="student-top-user"><i class="fa-solid fa-circle-user"></i><span>{{ student.full_name }}</span></div>
+        </header>
+
+        <section class="student-content">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

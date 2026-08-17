@@ -1,0 +1,66 @@
+{% extends "layouts/student_base.html" %}
+{% block title %}My Performance{% endblock %}
+{% block page_title %}My Performance{% endblock %}
+{% block content %}
+<div class="student-page-intro">
+    <h2>Academic Performance</h2>
+    <p>Track your semester performance, subject marks and overall academic progress.</p>
+</div>
+
+<div class="student-stats">
+    <div class="student-stat"><i class="fa-solid fa-graduation-cap"></i><div><span>Current CGPA</span><strong>{{ '%.2f'|format(student.cgpa or 0) }}</strong></div></div>
+    <div class="student-stat"><i class="fa-solid fa-percent"></i><div><span>Average Marks</span><strong>{{ average_marks }}%</strong></div></div>
+    <div class="student-stat"><i class="fa-solid fa-chart-line"></i><div><span>Status</span><strong class="performance-text">{{ performance }}</strong></div></div>
+    <div class="student-stat"><i class="fa-solid fa-calendar-check"></i><div><span>Attendance</span><strong>{{ attendance_pct }}%</strong></div></div>
+</div>
+
+<div class="student-panel chart-panel large-chart">
+    <div class="panel-head"><h3>Semester-wise Performance</h3></div>
+    <canvas id="performanceChart"></canvas>
+</div>
+
+<div class="performance-highlight-grid">
+    <div class="student-panel highlight-panel">
+        <span>Highest Subject Score</span>
+        {% if highest %}<strong>{{ highest.subject }}</strong><b>{{ highest.percentage }}%</b>{% else %}<strong>—</strong>{% endif %}
+    </div>
+    <div class="student-panel highlight-panel">
+        <span>Lowest Subject Score</span>
+        {% if lowest %}<strong>{{ lowest.subject }}</strong><b>{{ lowest.percentage }}%</b>{% else %}<strong>—</strong>{% endif %}
+    </div>
+</div>
+
+<div class="student-panel">
+    <div class="panel-head"><h3>Subject-wise Performance</h3><span class="muted">{{ subject_rows|length }} records</span></div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Semester</th><th>Subject</th><th>Marks</th><th>Percentage</th><th>Status</th></tr></thead>
+            <tbody>
+            {% for row in subject_rows %}
+                <tr>
+                    <td>{{ row.semester }}</td>
+                    <td><strong>{{ row.subject }}</strong></td>
+                    <td>{{ row.marks|round(1) }} / {{ row.max_marks|round(1) }}</td>
+                    <td>{{ row.percentage }}%</td>
+                    <td><span class="status-pill {% if row.percentage >= 75 %}good{% elif row.percentage >= 50 %}warning{% else %}danger{% endif %}">{% if row.percentage >= 75 %}Good{% elif row.percentage >= 50 %}Average{% else %}Needs Attention{% endif %}</span></td>
+                </tr>
+            {% else %}
+                <tr><td colspan="5" class="empty">No academic records have been added yet.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %}
+<script>
+new Chart(document.getElementById('performanceChart'), {
+    type: 'line',
+    data: {
+        labels: {{ semester_labels|tojson }},
+        datasets: [{label: 'Average Marks %', data: {{ semester_values|tojson }}, tension: .35, fill: false}]
+    },
+    options: {responsive:true, maintainAspectRatio:false, scales:{y:{beginAtZero:true,max:100}}}
+});
+</script>
+{% endblock %}

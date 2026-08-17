@@ -1,0 +1,19 @@
+{% extends "layouts/student_base.html" %}
+{% block title %}My Performance{% endblock %}
+{% block page_title %}My Performance{% endblock %}
+{% block content %}
+<div class="student-welcome"><div><h2>Welcome, {{ student.full_name }} 👋</h2><p>{{ student.student_id }} · {{ student.department.department_name }} · Semester {{ student.semester or '—' }}</p></div></div>
+<div class="student-stats">
+<div class="student-stat"><i class="fa-solid fa-graduation-cap"></i><div><span>Current CGPA</span><strong>{{ '%.2f'|format(student.cgpa or 0) }}</strong></div></div>
+<div class="student-stat"><i class="fa-solid fa-calendar-check"></i><div><span>Attendance</span><strong>{{ attendance_pct }}%</strong></div></div>
+<div class="student-stat"><i class="fa-solid fa-layer-group"></i><div><span>Semester</span><strong>{{ student.semester or '—' }}</strong></div></div>
+<div class="student-stat"><i class="fa-solid fa-chart-line"></i><div><span>Performance</span><strong class="performance-text">{{ performance }}</strong></div></div>
+</div>
+<div class="student-grid">
+<div class="student-panel chart-panel"><div class="panel-head"><h3>Academic Performance</h3></div><canvas id="studentPerformanceChart"></canvas></div>
+<div class="student-panel"><div class="panel-head"><h3>Attendance Summary</h3></div><div class="attendance-circle"><strong>{{ attendance_pct }}%</strong><span>Attendance</span></div><div class="attendance-info"><div><span>Present</span><strong>{{ present_days }}</strong></div><div><span>Total Records</span><strong>{{ total_attendance }}</strong></div></div></div>
+</div>
+<div class="student-panel"><div class="panel-head"><h3>My Subject Marks</h3><span class="muted">{{ results|length }} subject records</span></div><div class="table-wrap"><table><thead><tr><th>Semester</th><th>Subject</th><th>Marks</th><th>Percentage</th></tr></thead><tbody>{% for result in results %}<tr><td>{{ result.semester }}</td><td><strong>{{ result.subject }}</strong></td><td>{{ result.marks|round(1) }} / {{ result.max_marks|round(1) }}</td><td>{{ ((result.marks / result.max_marks) * 100)|round(1) }}%</td></tr>{% else %}<tr><td colspan="4" class="empty">No subject marks have been recorded yet.</td></tr>{% endfor %}</tbody></table></div></div>
+<div class="student-panel password-panel"><div class="panel-head"><h3>Change Password</h3></div><form method="post" action="{{ url_for('student.change_password') }}" class="password-form"><input type="password" name="current_password" placeholder="Current password" required><input type="password" name="new_password" placeholder="New password (6+ characters)" required><input type="password" name="confirm_password" placeholder="Confirm new password" required><button class="student-btn" type="submit">Update Password</button></form><p class="muted password-note">For newly created students, the initial password is the Student ID. Change it after your first login.</p></div>
+{% endblock %}
+{% block extra_js %}<script>new Chart(document.getElementById('studentPerformanceChart'),{type:'bar',data:{labels:{{ semester_labels|tojson }},datasets:[{label:'Average Marks %',data:{{ semester_values|tojson }},borderRadius:8}]},options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,max:100}}}});</script>{% endblock %}

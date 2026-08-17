@@ -39,9 +39,14 @@ class StudentService:
 
             attendance=float(data["attendance"]),
 
-            department_id=int(data["department_id"])
+            department_id=int(data["department_id"]),
+
+            password_hash=None
 
         )
+
+        # Initial student password is the Student ID.
+        student.set_password(data["student_id"])
 
         db.session.add(student)
 

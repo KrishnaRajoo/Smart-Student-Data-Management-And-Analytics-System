@@ -1,0 +1,32 @@
+{% extends "layouts/student_base.html" %}
+{% block title %}My Profile{% endblock %}
+{% block page_title %}My Profile{% endblock %}
+{% block content %}
+<div class="student-page-intro">
+    <h2>My Profile</h2>
+    <p>Your student information and account settings.</p>
+</div>
+<div class="profile-grid">
+    <div class="student-panel profile-card">
+        <div class="profile-avatar"><i class="fa-solid fa-user-graduate"></i></div>
+        <h3>{{ student.full_name }}</h3>
+        <span>{{ student.student_id }}</span>
+        <div class="profile-details">
+            <div><small>Department</small><strong>{{ student.department.department_name }}</strong></div>
+            <div><small>Semester</small><strong>{{ student.semester or '—' }}</strong></div>
+            <div><small>Email</small><strong>{{ student.email or '—' }}</strong></div>
+            <div><small>Phone</small><strong>{{ student.phone or '—' }}</strong></div>
+        </div>
+    </div>
+    <div class="student-panel">
+        <div class="panel-head"><h3>Change Password</h3></div>
+        <form method="post" action="{{ url_for('student.change_password') }}" class="password-form profile-password-form">
+            <input type="password" name="current_password" placeholder="Current password" required>
+            <input type="password" name="new_password" placeholder="New password (6+ characters)" required>
+            <input type="password" name="confirm_password" placeholder="Confirm new password" required>
+            <button class="student-btn" type="submit">Update Password</button>
+        </form>
+        <p class="muted password-note">If this is your first login, your initial password is your Student ID.</p>
+    </div>
+</div>
+{% endblock %}

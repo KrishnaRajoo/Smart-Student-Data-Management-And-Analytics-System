@@ -1,0 +1,24 @@
+{% extends "layouts/student_base.html" %}
+{% block title %}Academic Records{% endblock %}
+{% block page_title %}Academic Records{% endblock %}
+{% block content %}
+<div class="student-page-intro">
+    <h2>Academic Records</h2>
+    <p>Your complete subject-wise marks and semester records.</p>
+</div>
+<div class="student-panel">
+    <div class="panel-head"><h3>Marks History</h3><span class="muted">Average: {{ average_marks }}%</span></div>
+    <div class="table-wrap">
+        <table>
+            <thead><tr><th>Semester</th><th>Subject</th><th>Marks Obtained</th><th>Maximum</th><th>Percentage</th></tr></thead>
+            <tbody>
+            {% for row in subject_rows %}
+                <tr><td>{{ row.semester }}</td><td><strong>{{ row.subject }}</strong></td><td>{{ row.marks|round(1) }}</td><td>{{ row.max_marks|round(1) }}</td><td>{{ row.percentage }}%</td></tr>
+            {% else %}
+                <tr><td colspan="5" class="empty">No academic records available.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

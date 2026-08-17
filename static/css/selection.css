@@ -113,3 +113,7 @@
     font-size:18px;
 
 }
+.portal-grid{grid-template-columns:repeat(3,1fr)}
+.portal-card.student{border-color:#7c3aed}
+.portal-card.student i{color:#7c3aed}
+@media(max-width:900px){.portal-grid{grid-template-columns:1fr}}

@@ -22,12 +22,8 @@ class Department(db.Model):
 
     students = db.relationship(
         "Student",
-        backref="department",
+        back_populates="department",
         lazy=True
-    )
-    students = db.relationship(
-        "Student",
-        back_populates="department"
     )
 
     teachers = db.relationship(
