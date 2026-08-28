@@ -105,4 +105,4 @@ def login(role):
 @auth.route("/logout")
 def logout():
     session.clear()
-    return redirect(url_for("home"))
+    return render_template("auth/login_selection.html")
