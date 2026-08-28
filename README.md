@@ -4,7 +4,7 @@ A full-stack Student Analytics System developed using **Flask**, **MySQL**, and 
 
 ## 🌐 Live Demo
 
-🔗 **Live Application:** [https://smart-student-data-management-and.onrender.com]
+🔗 **Live Application:** https://ssas-iaxa.onrender.com
 
 ---
 
