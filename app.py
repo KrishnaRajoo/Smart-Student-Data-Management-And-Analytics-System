@@ -20,6 +20,7 @@ from routes.student import student
 from routes.student_management import student_management
 from routes.teacher_management import teacher_management
 from routes.analytics import analytics
+from routes.prediction import prediction
 
 app = Flask(__name__)
 
@@ -34,6 +35,7 @@ app.register_blueprint(student)
 app.register_blueprint(student_management)
 app.register_blueprint(teacher_management)
 app.register_blueprint(analytics)
+app.register_blueprint(prediction)
 
 
 @app.route("/")

@@ -1,0 +1,65 @@
+{
+    "project": "Smart Student Analytics System",
+    "model_name": "Gradient Boosting",
+    "model_version": "2.0",
+    "feature_count": 6,
+    "features": [
+        {
+            "name": "semester",
+            "type": "integer",
+            "description": "Student academic semester"
+        },
+        {
+            "name": "cgpa",
+            "type": "float",
+            "description": "Student cumulative grade point average"
+        },
+        {
+            "name": "attendance",
+            "type": "float",
+            "description": "Student attendance percentage"
+        },
+        {
+            "name": "average_marks",
+            "type": "float",
+            "description": "Average academic marks"
+        },
+        {
+            "name": "highest_marks",
+            "type": "float",
+            "description": "Highest academic marks"
+        },
+        {
+            "name": "lowest_marks",
+            "type": "float",
+            "description": "Lowest academic marks"
+        }
+    ],
+    "target": {
+        "name": "target",
+        "classes": [
+            "High",
+            "Low",
+            "Moderate"
+        ],
+        "description": "Predicted academic risk category"
+    },
+    "excluded_features": [
+        "study_hours",
+        "assignment_score",
+        "internal_exam_score",
+        "quiz_score",
+        "project_score",
+        "extracurricular_score"
+    ],
+    "training_dataset": "C:\\Users\\Krishna Rajoo\\OneDrive\\Documents\\Smart-Student-Data-Management-And-Analytics-System\\ml\\datasets\\student_risk_dataset.csv",
+    "generated_at": "2026-08-29T23:10:42.608489",
+    "feature_importance": {
+        "semester": 0.0034263799322493864,
+        "cgpa": 0.20299662969961907,
+        "attendance": 0.1907475154355148,
+        "average_marks": 0.5186284534798048,
+        "highest_marks": 0.01672620390650851,
+        "lowest_marks": 0.06747481754630338
+    }
+}

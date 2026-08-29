@@ -1,0 +1,832 @@
+{% if role == "student" %}
+
+    {% extends "layouts/student_base.html" %}
+
+{% elif role == "teacher" %}
+
+    {% extends "layouts/teacher_base.html" %}
+
+{% else %}
+
+    {% extends "layouts/dashboard_base.html" %}
+
+{% endif %}
+
+
+{% block title %}
+Academic Risk Prediction
+{% endblock %}
+
+
+{% block page_title %}
+Academic Risk Prediction
+{% endblock %}
+
+
+{% block content %}
+
+<div class="prediction-page">
+
+    <!-- ========================================================= -->
+    <!-- HEADER -->
+    <!-- ========================================================= -->
+
+    <div class="prediction-header">
+
+        <div>
+
+            <h2>
+                Academic Risk Prediction
+            </h2>
+
+            <p>
+                AI-powered prediction of the student's
+                current academic risk level using academic
+                performance and attendance indicators.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================= -->
+    <!-- STUDENT SELECTION -->
+    <!-- ========================================================= -->
+
+    {% if role in ["admin", "teacher"] %}
+
+        <div class="prediction-card">
+
+            <div class="prediction-card-header">
+
+                <div>
+
+                    <h3>
+                        Select Student
+                    </h3>
+
+                    <p>
+                        Choose a student to generate an
+                        academic risk prediction.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form
+                method="GET"
+                class="prediction-select-form"
+            >
+
+                <select
+                    name="student_id"
+                    required
+                >
+
+                    <option value="">
+                        Select a student
+                    </option>
+
+
+                    {% for item in students %}
+
+                        <option
+                            value="{{ item.id }}"
+                            {% if student and student.id == item.id %}
+                                selected
+                            {% endif %}
+                        >
+
+                            {{ item.student_id }}
+                            —
+                            {{ item.full_name }}
+
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="prediction-btn"
+                >
+
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                    Predict Risk
+
+                </button>
+
+            </form>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- ========================================================= -->
+    <!-- STUDENT PREDICTION VIEW -->
+    <!-- ========================================================= -->
+
+    {% if student and prediction %}
+
+
+        <!-- ===================================================== -->
+        <!-- STUDENT INFORMATION -->
+        <!-- ===================================================== -->
+
+        <div class="prediction-student-card">
+
+            <div class="prediction-avatar">
+
+                {{ student.first_name[0] }}
+
+                {% if student.last_name %}
+                    {{ student.last_name[0] }}
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <h3>
+                    {{ student.full_name }}
+                </h3>
+
+
+                <p>
+
+                    {{ student.student_id }}
+
+                    {% if student.department %}
+
+                        ·
+
+                        {{ student.department.department_code }}
+
+                    {% endif %}
+
+
+                    ·
+
+                    Semester
+                    {{ prediction.features.semester or "—" }}
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===================================================== -->
+        <!-- INSUFFICIENT DATA -->
+        <!-- ===================================================== -->
+
+        {% if prediction.status == "insufficient_data" %}
+
+
+            <div class="prediction-card prediction-insufficient-data">
+
+                <div class="prediction-card-header">
+
+                    <div>
+
+                        <h3>
+                            Prediction Unavailable
+                        </h3>
+
+                        <p>
+                            There is not enough real academic
+                            data available for this student
+                            to generate a reliable prediction.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="prediction-notice">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <div>
+
+                        <strong>
+                            Additional academic records required
+                        </strong>
+
+                        <p>
+                            The prediction model requires actual
+                            academic result records to calculate
+                            average, highest, and lowest marks.
+                            No synthetic or estimated marks are
+                            used by the application.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% if prediction.missing_fields %}
+
+                    <div class="prediction-missing-data">
+
+                        <span>
+                            Missing information:
+                        </span>
+
+
+                        <div class="missing-field-list">
+
+                            {% for field in prediction.missing_fields %}
+
+                                <span class="missing-field">
+
+                                    {{ field }}
+
+                                </span>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+
+                <div class="prediction-feature-grid">
+
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Semester
+                        </span>
+
+                        <strong>
+                            {{ prediction.features.semester or "—" }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            CGPA
+                        </span>
+
+                        <strong>
+                            {% if prediction.features.cgpa is not none %}
+                                {{ prediction.features.cgpa }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Attendance
+                        </span>
+
+                        <strong>
+                            {% if prediction.features.attendance is not none %}
+                                {{ prediction.features.attendance }}%
+                            {% else %}
+                                —
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Average Marks
+                        </span>
+
+                        <strong>
+                            {% if prediction.features.average_marks is not none %}
+                                {{ prediction.features.average_marks }}%
+                            {% else %}
+                                —
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Highest Marks
+                        </span>
+
+                        <strong>
+                            {% if prediction.features.highest_marks is not none %}
+                                {{ prediction.features.highest_marks }}%
+                            {% else %}
+                                —
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Lowest Marks
+                        </span>
+
+                        <strong>
+                            {% if prediction.features.lowest_marks is not none %}
+                                {{ prediction.features.lowest_marks }}%
+                            {% else %}
+                                —
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        <!-- ===================================================== -->
+        <!-- PREDICTION ERROR -->
+        <!-- ===================================================== -->
+
+        {% elif prediction.status == "error" %}
+
+
+            <div class="prediction-card">
+
+                <div class="prediction-notice">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    <div>
+
+                        <strong>
+                            Prediction could not be generated
+                        </strong>
+
+                        <p>
+                            An error occurred while processing
+                            the student's academic information.
+                            Please try again.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        <!-- ===================================================== -->
+        <!-- SUCCESSFUL PREDICTION -->
+        <!-- ===================================================== -->
+
+        {% elif prediction.status == "success" %}
+
+
+            <!-- ================================================= -->
+            <!-- RISK RESULT -->
+            <!-- ================================================= -->
+
+            <div class="prediction-result-grid">
+
+
+                <div class="prediction-risk-card
+                    risk-{{ prediction.risk_level|lower }}">
+
+                    <span class="prediction-label">
+                        Predicted Academic Risk
+                    </span>
+
+
+                    <strong>
+                        {{ prediction.risk_level }}
+                    </strong>
+
+
+                    <small>
+
+                        Model confidence:
+                        {{ "%.2f"|format(prediction.confidence|float) }}%
+
+                    </small>
+
+                </div>
+
+
+                <div class="prediction-model-card">
+
+                    <span>
+                        Prediction Model
+                    </span>
+
+
+                    <strong>
+                        {{ prediction.model }}
+                    </strong>
+
+
+                    <small>
+                        Version {{ prediction.model_version }}
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- PROBABILITIES -->
+            <!-- ================================================= -->
+
+            <div class="prediction-card">
+
+                <div class="prediction-card-header">
+
+                    <div>
+
+                        <h3>
+                            Risk Probability
+                        </h3>
+
+                        <p>
+                            Probability assigned by the trained
+                            machine-learning model.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="probability-list">
+
+                    {% for label, probability
+                          in prediction.probabilities.items() %}
+
+
+                        <div class="probability-row">
+
+
+                            <div class="probability-title">
+
+                                <span>
+                                    {{ label }}
+                                </span>
+
+
+                                <strong>
+                                    {{ "%.2f"|format(probability|float) }}%
+                                </strong>
+
+                            </div>
+
+
+                            <div class="probability-bar">
+
+                                <div
+                                    class="probability-fill"
+                                    style="width: {{ probability }}%;"
+                                ></div>
+
+                            </div>
+
+
+                        </div>
+
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- MODEL INPUT FEATURES -->
+            <!-- ================================================= -->
+
+            <div class="prediction-card">
+
+                <div class="prediction-card-header">
+
+                    <div>
+
+                        <h3>
+                            Model Input Summary
+                        </h3>
+
+                        <p>
+                            The prediction model uses only the
+                            following six academic indicators.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="prediction-feature-grid">
+
+
+                    <!-- SEMESTER -->
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Semester
+                        </span>
+
+                        <strong>
+                            {{ prediction.features.semester }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- CGPA -->
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            CGPA
+                        </span>
+
+                        <strong>
+                            {{ prediction.features.cgpa }}
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ATTENDANCE -->
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Attendance
+                        </span>
+
+                        <strong>
+                            {{ prediction.features.attendance }}%
+                        </strong>
+
+                    </div>
+
+
+                    <!-- AVERAGE MARKS -->
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Average Marks
+                        </span>
+
+                        <strong>
+                            {{ prediction.features.average_marks }}%
+                        </strong>
+
+                    </div>
+
+
+                    <!-- HIGHEST MARKS -->
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Highest Marks
+                        </span>
+
+                        <strong>
+                            {{ prediction.features.highest_marks }}%
+                        </strong>
+
+                    </div>
+
+
+                    <!-- LOWEST MARKS -->
+
+                    <div class="prediction-feature">
+
+                        <span>
+                            Lowest Marks
+                        </span>
+
+                        <strong>
+                            {{ prediction.features.lowest_marks }}%
+                        </strong>
+
+                    </div>
+
+
+                </div><br>
+
+
+                <!-- RESULT COUNT -->
+
+                <div class="prediction-data-count">
+
+                    <i class="fa-solid fa-database"></i>
+
+                    <span>
+
+                        Prediction based on
+                        <strong>
+                            {{ prediction.result_count }}
+                        </strong>
+                        actual academic result
+                        {% if prediction.result_count == 1 %}
+                            record
+                        {% else %}
+                            records
+                        {% endif %}
+                        available in the database.
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- RECOMMENDATIONS -->
+            <!-- ================================================= -->
+
+            {% if prediction.recommendations %}
+
+                <div class="prediction-card">
+
+                    <div class="prediction-card-header">
+
+                        <div>
+
+                            <h3>
+                                Academic Recommendations
+                            </h3>
+
+                            <p>
+                                Suggested actions based on the
+                                prediction and available
+                                academic indicators.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="recommendation-list">
+
+
+                        {% for recommendation
+                              in prediction.recommendations %}
+
+
+                            <div class="recommendation-item">
+
+                                <i class="fa-solid fa-circle-check"></i>
+
+
+                                <span>
+                                    {{ recommendation }}
+                                </span>
+
+                            </div>
+
+
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <!-- ================================================= -->
+            <!-- DATA NOTICE -->
+            <!-- ================================================= -->
+
+            <div class="prediction-notice">
+
+                <i class="fa-solid fa-circle-info"></i>
+
+
+                <div>
+
+                    <strong>
+                        About this prediction
+                    </strong>
+
+
+                    <p>
+                        This prediction is generated using the
+                        trained {{ prediction.model }}
+                        machine-learning model. The model uses
+                        Semester, CGPA, Attendance, Average Marks,
+                        Highest Marks, and Lowest Marks as its
+                        input features.
+                    </p>
+
+
+                    <p>
+                        Average, highest, and lowest marks are
+                        calculated from the student's actual
+                        academic result records available in
+                        the SSAS database. No assignment marks,
+                        internal examination marks, study hours,
+                        quiz scores, or other unsupported
+                        attributes are used.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        {% endif %}
+
+
+    <!-- ========================================================= -->
+    <!-- ADMIN / TEACHER — NO STUDENT SELECTED -->
+    <!-- ========================================================= -->
+
+    {% elif role in ["admin", "teacher"] %}
+
+
+        <div class="prediction-empty">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+
+            <h3>
+                Select a student
+            </h3>
+
+
+            <p>
+                Select a student above to generate
+                an academic risk prediction.
+            </p>
+
+        </div>
+
+
+    <!-- ========================================================= -->
+    <!-- STUDENT — NO PREDICTION -->
+    <!-- ========================================================= -->
+
+    {% elif role == "student" %}
+
+
+        <div class="prediction-empty">
+
+            <i class="fa-solid fa-chart-line"></i>
+
+
+            <h3>
+                Prediction unavailable
+            </h3>
+
+
+            <p>
+                Your academic prediction could not be
+                loaded at this time.
+            </p>
+
+        </div>
+
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -44,8 +44,53 @@
         <ul class="sidebar-menu">
 
             {% block sidebar %}
+    <ul>
 
-            {% endblock %}
+        <li>
+            <a href="{{ url_for('admin.dashboard') }}">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('student_management.students') }}">
+                <i class="fa-solid fa-user-graduate"></i>
+                Students
+            </a>
+        </li>
+
+        <li>
+        <a href="{{ url_for('teacher_management.teachers') }}">
+            <i class="fa-solid fa-chalkboard-user"></i>
+            Teachers
+        </a>
+    </li>
+
+        <li>
+            <a href="{{ url_for('admin.analytics') }}">
+                <i class="fa-solid fa-chart-column"></i>
+                Analytics
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('prediction.admin_prediction') }}">
+                <i class="fas fa-brain"></i>
+                Prediction
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('auth.logout') }}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
+
+
+    </ul>
+{% endblock %}
 
         </ul>
 

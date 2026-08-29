@@ -37,6 +37,9 @@
             <a class="{% if request.endpoint == 'student.profile' %}active{% endif %}" href="{{ url_for('student.profile') }}">
                 <i class="fa-solid fa-user-circle"></i><span>My Profile</span>
             </a>
+            <a href="{{ url_for('prediction.student_prediction') }}">
+                <i class="fa-solid fas fa-brain"></i><span>Prediction</span>
+            </a>
         </nav>
 
         <a class="student-logout" href="{{ url_for('auth.logout') }}">

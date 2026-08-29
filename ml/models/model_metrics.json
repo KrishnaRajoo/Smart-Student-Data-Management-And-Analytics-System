@@ -1,0 +1,49 @@
+{
+    "project": "Smart Student Analytics System",
+    "task": "Student Academic Risk Prediction",
+    "model_selection_metric": "weighted_f1",
+    "best_model": "Gradient Boosting",
+    "best_accuracy": 0.8925,
+    "best_precision": 0.8937443553295268,
+    "best_recall": 0.8925,
+    "best_f1_score": 0.8928012917081333,
+    "models": {
+        "Random Forest": {
+            "accuracy": 0.8915,
+            "precision": 0.8919216758582149,
+            "recall": 0.8915,
+            "f1_score": 0.8916708481783385
+        },
+        "Gradient Boosting": {
+            "accuracy": 0.8925,
+            "precision": 0.8937443553295268,
+            "recall": 0.8925,
+            "f1_score": 0.8928012917081333
+        },
+        "XGBoost": {
+            "accuracy": 0.889,
+            "precision": 0.8900420206797806,
+            "recall": 0.889,
+            "f1_score": 0.8892807527077524
+        }
+    },
+    "features": [
+        "semester",
+        "cgpa",
+        "attendance",
+        "average_marks",
+        "highest_marks",
+        "lowest_marks"
+    ],
+    "target": "target",
+    "target_classes": [
+        "High",
+        "Low",
+        "Moderate"
+    ],
+    "training_dataset": "C:\\Users\\Krishna Rajoo\\OneDrive\\Documents\\Smart-Student-Data-Management-And-Analytics-System\\ml\\datasets\\student_risk_dataset.csv",
+    "training_samples": 8000,
+    "testing_samples": 2000,
+    "trained_at": "2026-08-29T23:10:42.608489",
+    "random_state": 42
+}

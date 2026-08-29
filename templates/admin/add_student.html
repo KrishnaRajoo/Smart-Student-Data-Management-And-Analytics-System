@@ -36,11 +36,19 @@
         </li>
 
         <li>
+            <a href="{{ url_for('prediction.admin_prediction') }}">
+                <i class="fas fa-brain"></i>
+                Prediction
+            </a>
+        </li>
+
+        <li>
             <a href="{{ url_for('auth.logout') }}">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 Logout
             </a>
         </li>
+
 
     </ul>
 {% endblock %}
