@@ -1,1 +1,220 @@
-{% extends "layouts/teacher_base.html" %}{% block title %}Performance{% endblock %}{% block page_title %}Department Performance{% endblock %}{% block content %}<div class="stats-grid"><div class="stat-card"><i class="fa-solid fa-graduation-cap"></i><div><span>Average CGPA</span><strong>{{ avg_cgpa }}</strong></div></div><div class="stat-card"><i class="fa-solid fa-calendar-check"></i><div><span>Average Attendance</span><strong>{{ avg_attendance }}%</strong></div></div><div class="stat-card"><i class="fa-solid fa-ranking-star"></i><div><span>Top CGPA</span><strong>{{ students[0].cgpa if students else '—' }}</strong></div></div></div><div class="panel"><div class="panel-head"><h3>Student Ranking</h3></div><div class="table-wrap"><table><thead><tr><th>Rank</th><th>Student</th><th>Semester</th><th>CGPA</th><th>Attendance</th><th>Category</th></tr></thead><tbody>{% for s in students %}<tr><td><span class="rank">{{ loop.index }}</span></td><td><strong>{{ s.first_name }} {{ s.last_name }}</strong><small>{{ s.student_id }}</small></td><td>{{ s.semester or '—' }}</td><td><strong>{{ s.cgpa or 0 }}</strong></td><td>{{ s.attendance or 0 }}%</td><td>{% if (s.cgpa or 0)>=9 %}<span class="badge excellent">Excellent</span>{% elif (s.cgpa or 0)>=7 %}<span class="badge good">Good</span>{% else %}<span class="badge warning">Needs Attention</span>{% endif %}</td></tr>{% else %}<tr><td colspan="6" class="empty">No students available.</td></tr>{% endfor %}</tbody></table></div></div>{% endblock %}
+{% extends "layouts/teacher_base.html" %}
+
+{% block title %}
+Performance
+{% endblock %}
+
+{% block page_title %}
+Department Performance
+{% endblock %}
+
+{% block content %}
+
+<!-- Performance Statistics -->
+
+<div class="stats-grid">
+
+<!-- Average CGPA -->
+<div class="stat-card">
+
+    <i class="fa-solid fa-graduation-cap"></i>
+
+    <div>
+        <span>Average CGPA</span>
+
+        <strong>
+            {{ avg_cgpa }}
+        </strong>
+    </div>
+
+</div>
+
+
+<!-- Average Attendance -->
+<div class="stat-card">
+
+    <i class="fa-solid fa-calendar-check"></i>
+
+    <div>
+        <span>Average Attendance</span>
+
+        <strong>
+            {{ avg_attendance }}%
+        </strong>
+    </div>
+
+</div>
+
+
+<!-- Top CGPA -->
+<div class="stat-card">
+
+    <i class="fa-solid fa-ranking-star"></i>
+
+    <div>
+        <span>Top CGPA</span>
+
+        <strong>
+            {{ students[0].cgpa if students else '—' }}
+        </strong>
+    </div>
+
+</div>
+
+
+</div>
+
+<!-- Student Ranking Panel -->
+
+<div class="panel">
+
+
+<!-- Panel Header -->
+<div class="panel-head">
+
+    <h3>
+        Student Ranking
+    </h3>
+
+</div>
+
+
+<!-- Responsive Table Wrapper -->
+<div class="table-wrap">
+
+
+    <table>
+
+
+        <!-- Table Header -->
+        <thead>
+
+            <tr>
+                <th>Rank</th>
+                <th>Student</th>
+                <th>Semester</th>
+                <th>CGPA</th>
+                <th>Attendance</th>
+                <th>Category</th>
+            </tr>
+
+        </thead>
+
+
+        <!-- Table Body -->
+        <tbody>
+
+
+            {% for s in students %}
+
+            <tr>
+
+
+                <!-- Rank -->
+                <td>
+
+                    <span class="rank">
+                        {{ loop.index }}
+                    </span>
+
+                </td>
+
+
+                <!-- Student Information -->
+                <td>
+
+                    <strong>
+                        {{ s.first_name }} {{ s.last_name }}
+                    </strong>
+
+                    <small>
+                        {{ s.student_id }}
+                    </small>
+
+                </td>
+
+
+                <!-- Semester -->
+                <td>
+                    {{ s.semester or '—' }}
+                </td>
+
+
+                <!-- CGPA -->
+                <td>
+
+                    <strong>
+                        {{ s.cgpa or 0 }}
+                    </strong>
+
+                </td>
+
+
+                <!-- Attendance -->
+                <td>
+                    {{ s.attendance or 0 }}%
+                </td>
+
+
+                <!-- Performance Category -->
+                <td>
+
+                    {% if (s.cgpa or 0) >= 9 %}
+
+                        <span class="badge excellent">
+                            Excellent
+                        </span>
+
+
+                    {% elif (s.cgpa or 0) >= 7 %}
+
+                        <span class="badge good">
+                            Good
+                        </span>
+
+
+                    {% else %}
+
+                        <span class="badge warning">
+                            Needs Attention
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+
+            </tr>
+
+
+            {% else %}
+
+
+            <!-- No Students Available -->
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty"
+                >
+                    No students available.
+                </td>
+
+            </tr>
+
+
+            {% endfor %}
+
+
+        </tbody>
+
+
+    </table>
+
+
+</div>
+
+
+</div>
+
+{% endblock %}

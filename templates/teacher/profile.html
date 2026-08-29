@@ -1,1 +1,127 @@
-{% extends "layouts/teacher_base.html" %}{% block title %}My Profile{% endblock %}{% block page_title %}My Profile{% endblock %}{% block content %}<div class="panel profile-card"><div class="student-avatar"><i class="fa-solid fa-chalkboard-user"></i></div><div><h2>{{ teacher.full_name }}</h2><p>{{ teacher.teacher_id }} · {{ teacher.designation }}</p></div></div><div class="panel"><div class="info-grid"><div><span>Email</span><strong>{{ teacher.email }}</strong></div><div><span>Phone</span><strong>{{ teacher.phone or 'Not available' }}</strong></div><div><span>Department</span><strong>{{ teacher.department.department_name }}</strong></div><div><span>Qualification</span><strong>{{ teacher.qualification or 'Not available' }}</strong></div><div><span>Joining Date</span><strong>{{ teacher.joining_date or 'Not available' }}</strong></div><div><span>Status</span><strong>{{ teacher.status }}</strong></div></div></div>{% endblock %}
+{% extends "layouts/teacher_base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block page_title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<!-- Profile Header Card -->
+
+<div class="panel profile-card">
+
+<!-- Teacher Avatar -->
+<div class="student-avatar">
+
+    <i class="fa-solid fa-chalkboard-user"></i>
+
+</div>
+
+
+<!-- Teacher Basic Information -->
+<div>
+
+    <h2>
+        {{ teacher.full_name }}
+    </h2>
+
+    <p>
+        {{ teacher.teacher_id }}
+        ·
+        {{ teacher.designation }}
+    </p>
+
+</div>
+
+
+</div>
+
+<!-- Teacher Information -->
+
+<div class="panel">
+
+<div class="info-grid">
+
+
+    <!-- Email -->
+    <div>
+
+        <span>Email</span>
+
+        <strong>
+            {{ teacher.email }}
+        </strong>
+
+    </div>
+
+
+    <!-- Phone -->
+    <div>
+
+        <span>Phone</span>
+
+        <strong>
+            {{ teacher.phone or 'Not available' }}
+        </strong>
+
+    </div>
+
+
+    <!-- Department -->
+    <div>
+
+        <span>Department</span>
+
+        <strong>
+            {{ teacher.department.department_name }}
+        </strong>
+
+    </div>
+
+
+    <!-- Qualification -->
+    <div>
+
+        <span>Qualification</span>
+
+        <strong>
+            {{ teacher.qualification or 'Not available' }}
+        </strong>
+
+    </div>
+
+
+    <!-- Joining Date -->
+    <div>
+
+        <span>Joining Date</span>
+
+        <strong>
+            {{ teacher.joining_date or 'Not available' }}
+        </strong>
+
+    </div>
+
+
+    <!-- Status -->
+    <div>
+
+        <span>Status</span>
+
+        <strong>
+            {{ teacher.status }}
+        </strong>
+
+    </div>
+
+
+</div>
+
+
+</div>
+
+{% endblock %}

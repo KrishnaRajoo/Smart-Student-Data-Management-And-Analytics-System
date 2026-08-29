@@ -90,79 +90,69 @@ class="btn-primary">
 
 </div>
 
-<table class="table">
+<div class="table-wrapper">
 
-<thead>
+    <table class="table">
 
-<tr>
+        <thead>
 
-<th>ID</th>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
 
-<th>Name</th>
+        </thead>
 
-<th>Department</th>
+        <tbody>
 
-<th>Designation</th>
+            {% for teacher in teachers %}
 
-<th>Email</th>
+            <tr>
 
-<th>Status</th>
+                <td>{{ teacher.teacher_id }}</td>
 
-<th>Actions</th>
+                <td>{{ teacher.full_name }}</td>
 
-</tr>
+                <td>{{ teacher.department.department_name }}</td>
 
-</thead>
+                <td>{{ teacher.designation }}</td>
 
-<tbody>
+                <td>{{ teacher.email }}</td>
 
-{% for teacher in teachers %}
+                <td>{{ teacher.status }}</td>
 
-<tr>
+                <td>
 
-<td>{{ teacher.teacher_id }}</td>
+                    <a href="#" class="action-btn view">
+                        <i class="fa-solid fa-eye"></i>
+                    </a>
 
-<td>{{ teacher.full_name }}</td>
+                    <a href="{{ url_for('teacher_management.edit_teacher', teacher_id=teacher.id) }}"
+                       class="action-btn edit">
+                        <i class="fa-solid fa-pen"></i>
+                    </a>
 
-<td>{{ teacher.department.department_name }}</td>
+                    <a href="{{ url_for('teacher_management.delete_teacher', teacher_id=teacher.id) }}"
+                       class="action-btn delete"
+                       onclick="return confirm('Are you sure you want to delete this teacher?')">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
 
-<td>{{ teacher.designation }}</td>
+                </td>
 
-<td>{{ teacher.email }}</td>
+            </tr>
 
-<td>{{ teacher.status }}</td>
+            {% endfor %}
 
-<td>
-    <a href="#" class="action-btn view">
+        </tbody>
 
-            <i class="fa-solid fa-eye"></i>
+    </table>
 
-        </a>
-
-<a href="{{ url_for('teacher_management.edit_teacher', teacher_id=teacher.id) }}">
-
-<i class="fa-solid fa-pen"></i>
-
-</a>
-
-|
-
-<a
-href="{{ url_for('teacher_management.delete_teacher', teacher_id=teacher.id) }}"
-onclick="return confirm('Are you sure you want to delete this teacher?')">
-
-<i class="fa-solid fa-trash"></i>
-
-</a>
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
+</div>
 
 {% endblock %}

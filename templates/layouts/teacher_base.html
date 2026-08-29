@@ -1,1 +1,303 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>{% block title %}Teacher Portal{% endblock %} | SSAS</title><link rel="icon" href="{{ url_for('static', filename='images/logo2.png') }}"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"><link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">{% block extra_css %}{% endblock %}</head><body><div class="teacher-shell"><aside class="teacher-sidebar"><div class="teacher-brand"><i class="fa-solid fa-chart-simple"></i><div><strong>SSAS</strong><small>Teacher Portal</small></div></div><div class="teacher-user"><div class="avatar"><i class="fa-solid fa-chalkboard-user"></i></div><div><strong>{{ teacher.full_name }}</strong><small>{{ teacher.designation }}</small></div></div><nav><a class="{% if request.endpoint == 'teacher.dashboard' %}active{% endif %}" href="{{ url_for('teacher.dashboard') }}"><i class="fa-solid fa-house"></i>Dashboard</a><a class="{% if request.endpoint in ['teacher.students','teacher.student_detail'] %}active{% endif %}" href="{{ url_for('teacher.students') }}"><i class="fa-solid fa-user-graduate"></i>My Students</a><a class="{% if request.endpoint == 'teacher.attendance' %}active{% endif %}" href="{{ url_for('teacher.attendance') }}"><i class="fa-solid fa-calendar-check"></i>Attendance</a><a class="{% if request.endpoint == 'teacher.performance' %}active{% endif %}" href="{{ url_for('teacher.performance') }}"><i class="fa-solid fa-chart-line"></i>Performance</a><a class="{% if request.endpoint == 'teacher.profile' %}active{% endif %}" href="{{ url_for('teacher.profile') }}"><i class="fa-solid fa-user"></i>My Profile</a></nav><a class="logout" href="{{ url_for('auth.logout') }}"><i class="fa-solid fa-right-from-bracket"></i>Logout</a></aside><main class="teacher-main"><header class="teacher-topbar"><div><h1>{% block page_title %}Teacher Dashboard{% endblock %}</h1><p>{{ teacher.department.department_name }} · {{ teacher.department.department_code }}</p></div><div class="top-teacher"><i class="fa-solid fa-circle-user"></i><span>{{ teacher.full_name }}</span></div></header><section class="teacher-content">{% with messages = get_flashed_messages(with_categories=true) %}{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}{% block content %}{% endblock %}</section></main></div><script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% block extra_js %}{% endblock %}</body></html>
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    {% block title %}
+        Teacher Portal
+    {% endblock %}
+    | SSAS
+</title>
+
+
+<!-- Favicon -->
+<link
+    rel="icon"
+    href="{{ url_for('static', filename='images/logo2.png') }}"
+>
+
+
+<!-- Google Fonts -->
+<link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+>
+
+<link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+>
+
+
+<!-- Font Awesome -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+
+<!-- Teacher CSS -->
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/teacher.css') }}"
+>
+
+
+{% block extra_css %}
+{% endblock %}
+
+</head>
+
+<body>
+
+<div class="teacher-shell">
+
+
+    <!-- Sidebar -->
+    <aside class="teacher-sidebar">
+
+
+        <!-- Brand -->
+        <div class="teacher-brand">
+
+            <i class="fa-solid fa-chart-simple"></i>
+
+
+            <div>
+
+                <strong>
+                    SSAS
+                </strong>
+
+                <small>
+                    Teacher Portal
+                </small>
+
+            </div>
+
+        </div>
+
+
+        <!-- Teacher Information -->
+        <div class="teacher-user">
+
+
+            <div class="avatar">
+
+                <i class="fa-solid fa-chalkboard-user"></i>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    {{ teacher.full_name }}
+                </strong>
+
+                <small>
+                    {{ teacher.designation }}
+                </small>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Navigation -->
+        <nav>
+
+
+            <!-- Dashboard -->
+            <a
+                class="{% if request.endpoint == 'teacher.dashboard' %}active{% endif %}"
+                href="{{ url_for('teacher.dashboard') }}"
+            >
+
+                <i class="fa-solid fa-house"></i>
+
+                Dashboard
+
+            </a>
+
+
+            <!-- My Students -->
+            <a
+                class="{% if request.endpoint in ['teacher.students', 'teacher.student_detail'] %}active{% endif %}"
+                href="{{ url_for('teacher.students') }}"
+            >
+
+                <i class="fa-solid fa-user-graduate"></i>
+
+                My Students
+
+            </a>
+
+
+            <!-- Attendance -->
+            <a
+                class="{% if request.endpoint == 'teacher.attendance' %}active{% endif %}"
+                href="{{ url_for('teacher.attendance') }}"
+            >
+
+                <i class="fa-solid fa-calendar-check"></i>
+
+                Attendance
+
+            </a>
+
+
+            <!-- Performance -->
+            <a
+                class="{% if request.endpoint == 'teacher.performance' %}active{% endif %}"
+                href="{{ url_for('teacher.performance') }}"
+            >
+
+                <i class="fa-solid fa-chart-line"></i>
+
+                Performance
+
+            </a>
+
+
+            <!-- My Profile -->
+            <a
+                class="{% if request.endpoint == 'teacher.profile' %}active{% endif %}"
+                href="{{ url_for('teacher.profile') }}"
+            >
+
+                <i class="fa-solid fa-user"></i>
+
+                My Profile
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- Logout -->
+        <a
+            class="logout"
+            href="{{ url_for('auth.logout') }}"
+        >
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="teacher-main">
+
+
+        <!-- Top Bar -->
+        <header class="teacher-topbar">
+
+
+            <!-- Page Title -->
+            <div>
+
+                <h1>
+
+                    {% block page_title %}
+                        Teacher Dashboard
+                    {% endblock %}
+
+                </h1>
+
+
+                <p>
+
+                    {{ teacher.department.department_name }}
+                    ·
+                    {{ teacher.department.department_code }}
+
+                </p>
+
+
+            </div>
+
+
+            <!-- Teacher Profile -->
+            <div class="top-teacher">
+
+                <i class="fa-solid fa-circle-user"></i>
+
+                <span>
+                    {{ teacher.full_name }}
+                </span>
+
+            </div>
+
+
+        </header>
+
+
+        <!-- Page Content -->
+        <section class="teacher-content">
+
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% for category, message in messages %}
+
+                    <div class="flash {{ category }}">
+
+                        {{ message }}
+
+                    </div>
+
+                {% endfor %}
+
+            {% endwith %}
+
+
+            <!-- Child Template Content -->
+            {% block content %}
+            {% endblock %}
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<!-- Additional JavaScript -->
+{% block extra_js %}
+{% endblock %}
+
+
+</body>
+
+</html>
