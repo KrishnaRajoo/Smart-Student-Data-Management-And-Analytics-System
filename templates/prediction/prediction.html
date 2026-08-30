@@ -50,83 +50,216 @@ Academic Risk Prediction
     </div>
 
 
-    <!-- ========================================================= -->
-    <!-- STUDENT SELECTION -->
-    <!-- ========================================================= -->
+<!-- ========================================================= -->
+<!-- STUDENT SEARCH -->
+<!-- ========================================================= -->
 
-    {% if role in ["admin", "teacher"] %}
+{% if role in ["admin", "teacher"] %}
 
-        <div class="prediction-card">
+    <div class="prediction-card">
 
-            <div class="prediction-card-header">
+        <div class="prediction-card-header">
 
-                <div>
+            <div>
 
-                    <h3>
-                        Select Student
-                    </h3>
+                <h3>
+                    Search Student
+                </h3>
 
-                    <p>
-                        Choose a student to generate an
-                        academic risk prediction.
-                    </p>
+                <p>
+                    Search by student ID, name, or department
+                    to generate an academic risk prediction.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <form
+            method="GET"
+            class="prediction-search-form"
+            id="predictionSearchForm"
+        >
+
+            <!-- Hidden student ID submitted to Flask -->
+            <input
+                type="hidden"
+                name="student_id"
+                id="selectedStudentId"
+                value="{% if student %}{{ student.id }}{% endif %}"
+            >
+
+
+            <!-- Search Input -->
+
+            <div class="prediction-search-wrapper">
+
+                <i class="fa-solid fa-magnifying-glass"></i>
+
+                <input
+                    type="text"
+                    id="studentSearch"
+                    class="prediction-search-input"
+                    placeholder="Search by Student ID, name, or department..."
+                    autocomplete="off"
+                >
+
+                <button
+                    type="button"
+                    id="clearStudentSearch"
+                    class="prediction-search-clear"
+                    title="Clear search"
+                    style="display: none;"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- Search Results -->
+
+            <div
+                id="studentSearchResults"
+                class="student-search-results"
+            >
+
+                {% for item in students %}
+
+                    <button
+                        type="button"
+                        class="student-search-result"
+                        data-id="{{ item.id }}"
+                        data-student-id="{{ item.student_id|lower }}"
+                        data-name="{{ item.full_name|lower }}"
+                        data-department="{% if item.department %}{{ item.department.department_code|lower }}{% endif %}"
+                    >
+
+                        <span class="search-result-avatar">
+
+                            {{ item.first_name[0] }}
+
+                            {% if item.last_name %}
+                                {{ item.last_name[0] }}
+                            {% endif %}
+
+                        </span>
+
+
+                        <span class="search-result-info">
+
+                            <strong>
+                                {{ item.full_name }}
+                            </strong>
+
+                            <small>
+
+                                ID:
+                                {{ item.student_id }}
+
+                                {% if item.department %}
+
+                                    <span>·</span>
+
+                                    {{ item.department.department_code }}
+
+                                {% endif %}
+
+                            </small>
+
+                        </span>
+
+
+                        <i class="fa-solid fa-arrow-right search-result-arrow"></i>
+
+                    </button>
+
+                {% endfor %}
+
+
+                <!-- No Results -->
+
+                <div
+                    id="noStudentResults"
+                    class="no-student-results"
+                    style="display: none;"
+                >
+
+                    <i class="fa-solid fa-user-slash"></i>
+
+                    <strong>
+                        No student found
+                    </strong>
+
+                    <span>
+                        Try searching with another ID, name, or department.
+                    </span>
 
                 </div>
 
             </div>
 
 
-            <form
-                method="GET"
-                class="prediction-select-form"
+            <!-- Selected Student -->
+
+            <div
+                id="selectedStudentPreview"
+                class="selected-student-preview"
+                {% if not student %}
+                    style="display: none;"
+                {% endif %}
             >
 
-                <select
-                    name="student_id"
-                    required
-                >
+                <div class="selected-student-icon">
 
-                    <option value="">
-                        Select a student
-                    </option>
+                    <i class="fa-solid fa-user-check"></i>
 
+                </div>
 
-                    {% for item in students %}
+                <div>
 
-                        <option
-                            value="{{ item.id }}"
-                            {% if student and student.id == item.id %}
-                                selected
-                            {% endif %}
-                        >
+                    <span>
+                        Selected Student
+                    </span>
 
-                            {{ item.student_id }}
-                            —
-                            {{ item.full_name }}
+                    <strong id="selectedStudentName">
 
-                        </option>
+                        {% if student %}
+                            {{ student.full_name }}
+                        {% endif %}
 
-                    {% endfor %}
+                    </strong>
 
-                </select>
+                </div>
+
+            </div>
 
 
-                <button
-                    type="submit"
-                    class="prediction-btn"
-                >
+            <!-- Predict Button -->
 
-                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <button
+                type="submit"
+                class="prediction-btn"
+                id="predictStudentBtn"
+                disabled
+            >
 
-                    Predict Risk
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
 
-                </button>
+                Predict Risk
 
-            </form>
+            </button>
 
-        </div>
+        </form>
 
-    {% endif %}
+    </div>
+
+{% endif %}
+
+
 
 
     <!-- ========================================================= -->
@@ -828,5 +961,221 @@ Academic Risk Prediction
     {% endif %}
 
 </div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput =
+        document.getElementById("studentSearch");
+
+    const searchResults =
+        document.getElementById("studentSearchResults");
+
+    const studentResults =
+        document.querySelectorAll(".student-search-result");
+
+    const noResults =
+        document.getElementById("noStudentResults");
+
+    const selectedStudentId =
+        document.getElementById("selectedStudentId");
+
+    const selectedStudentPreview =
+        document.getElementById("selectedStudentPreview");
+
+    const selectedStudentName =
+        document.getElementById("selectedStudentName");
+
+    const predictButton =
+        document.getElementById("predictStudentBtn");
+
+    const clearButton =
+        document.getElementById("clearStudentSearch");
+
+
+    if (!searchInput) {
+        return;
+    }
+
+
+    /* ---------------------------------------------------------
+       Search Students
+       --------------------------------------------------------- */
+
+    searchInput.addEventListener("input", function () {
+
+        const searchValue =
+            this.value
+                .trim()
+                .toLowerCase();
+
+
+        let visibleCount = 0;
+
+
+        studentResults.forEach(function (student) {
+
+            const studentId =
+                student.dataset.studentId || "";
+
+            const name =
+                student.dataset.name || "";
+
+            const department =
+                student.dataset.department || "";
+
+
+            const matches =
+                studentId.includes(searchValue) ||
+                name.includes(searchValue) ||
+                department.includes(searchValue);
+
+
+            if (matches) {
+
+                student.style.display = "flex";
+
+                visibleCount++;
+
+            } else {
+
+                student.style.display = "none";
+
+            }
+
+        });
+
+
+        /* No Results */
+
+        if (visibleCount === 0) {
+
+            noResults.style.display = "flex";
+
+        } else {
+
+            noResults.style.display = "none";
+
+        }
+
+
+        /* Clear Button */
+
+        if (searchValue.length > 0) {
+
+            clearButton.style.display = "flex";
+
+        } else {
+
+            clearButton.style.display = "none";
+
+        }
+
+    });
+
+
+    /* ---------------------------------------------------------
+       Select Student
+       --------------------------------------------------------- */
+
+    studentResults.forEach(function (student) {
+
+        student.addEventListener("click", function () {
+
+            const id =
+                this.dataset.id;
+
+            const name =
+                this.querySelector(
+                    ".search-result-info strong"
+                ).textContent.trim();
+
+
+            /* Store actual database ID */
+
+            selectedStudentId.value = id;
+
+
+            /* Show selected student */
+
+            selectedStudentName.textContent = name;
+
+            selectedStudentPreview.style.display = "flex";
+
+
+            /* Put selected student into search box */
+
+            searchInput.value = name;
+
+
+            /* Hide result list */
+
+            studentResults.forEach(function (item) {
+
+                item.style.display = "none";
+
+            });
+
+            noResults.style.display = "none";
+
+
+            /* Enable prediction */
+
+            predictButton.disabled = false;
+
+
+            clearButton.style.display = "flex";
+
+        });
+
+    });
+
+
+    /* ---------------------------------------------------------
+       Clear Search
+       --------------------------------------------------------- */
+
+    clearButton.addEventListener("click", function () {
+
+        searchInput.value = "";
+
+        selectedStudentId.value = "";
+
+        selectedStudentPreview.style.display = "none";
+
+        predictButton.disabled = true;
+
+
+        studentResults.forEach(function (student) {
+
+            student.style.display = "flex";
+
+        });
+
+
+        noResults.style.display = "none";
+
+        clearButton.style.display = "none";
+
+
+        searchInput.focus();
+
+    });
+
+
+    /* ---------------------------------------------------------
+       Existing Selected Student
+       --------------------------------------------------------- */
+
+    {% if student %}
+
+        predictButton.disabled = false;
+
+    {% endif %}
+
+});
+
+</script>
 
 {% endblock %}
