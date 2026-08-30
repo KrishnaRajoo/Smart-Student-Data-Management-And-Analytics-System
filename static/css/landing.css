@@ -206,19 +206,758 @@
 
 }
 
-.circle{
+/* =========================================================
+   HERO ANALYTICS VISUAL
+   BLUE & WHITE THEME
+   ========================================================= */
 
-    width:430px;
+.hero-right {
+    position: relative;
+    min-height: 560px;
 
-    height:430px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border-radius:50%;
+    padding: 30px;
+}
 
-    background:linear-gradient(135deg,#2563eb,#7c3aed);
 
-    animation:float 4s ease-in-out infinite;
+/* Remove old circle */
 
-    box-shadow:0 20px 50px rgba(37,99,235,.4);
+.hero-right .circle {
+    display: none;
+}
+
+
+/* =========================================================
+   MAIN ANALYTICS CARD
+   ========================================================= */
+
+.hero-analytics-card {
+
+    width: min(100%, 560px);
+
+    padding: 25px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border: 1px solid rgba(37, 99, 235, 0.12);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 60px rgba(30, 64, 175, 0.12);
+
+    backdrop-filter: blur(18px);
+
+    position: relative;
+
+    z-index: 2;
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   ANALYTICS HEADER
+   ========================================================= */
+
+.hero-analytics-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+
+}
+
+
+.hero-analytics-header span {
+
+    display: block;
+
+    color: #64748b;
+
+    font-size: 11px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.08em;
+
+    font-weight: 600;
+
+}
+
+
+.hero-analytics-header h3 {
+
+    margin-top: 4px;
+
+    color: #172033;
+
+    font-size: 19px;
+
+    font-weight: 700;
+
+}
+
+
+.hero-chart-icon {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    display: grid;
+    place-items: center;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 17px;
+
+}
+
+
+/* =========================================================
+   CHART
+   ========================================================= */
+
+.hero-chart {
+
+    display: flex;
+
+    height: 220px;
+
+    gap: 10px;
+
+}
+
+
+.chart-y-axis {
+
+    width: 30px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    padding: 5px 0 25px;
+
+}
+
+
+.chart-y-axis span {
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+    text-align: right;
+
+}
+
+
+.chart-area {
+
+    position: relative;
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.chart-grid-line {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: #e8eef7;
+
+}
+
+
+.line-1 {
+    top: 5%;
+}
+
+.line-2 {
+    top: 30%;
+}
+
+.line-3 {
+    top: 55%;
+}
+
+.line-4 {
+    top: 80%;
+}
+
+
+/* =========================================================
+   SVG PERFORMANCE LINE
+   ========================================================= */
+
+.performance-line {
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: calc(100% - 25px);
+
+    overflow: visible;
+
+}
+
+
+.chart-path {
+
+    fill: none;
+
+    stroke: #2563eb;
+
+    stroke-width: 4;
+
+    stroke-linecap: round;
+
+    stroke-linejoin: round;
+
+}
+
+.chart-fill {
+
+    fill: url(#2563eb);
+
+    /* Blue transparent fill under the graph */
+    opacity: 1;
+
+}
+
+
+
+.performance-line circle {
+
+    fill: #ffffff;
+
+    stroke: #2563eb;
+
+    stroke-width: 3;
+
+}
+
+
+/* =========================================================
+   X AXIS
+   ========================================================= */
+
+.chart-x-axis {
+
+    position: absolute;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+
+    justify-content: space-between;
+
+}
+
+
+.chart-x-axis span {
+
+    color: #94a3b8;
+
+    font-size: 9px;
+
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.hero-analytics-stats {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-top: 18px;
+
+}
+
+
+.hero-stat {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 13px;
+
+    background: #f8fbff;
+
+    border: 1px solid #e5edf8;
+
+    border-radius: 12px;
+
+}
+
+
+.hero-stat-icon {
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 10px;
+
+    display: grid;
+    place-items: center;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 13px;
+
+}
+
+
+.hero-stat span {
+
+    display: block;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+}
+
+
+.hero-stat strong {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #172033;
+
+    font-size: 16px;
+
+}
+
+
+/* =========================================================
+   PREDICTION RESULT
+   ========================================================= */
+
+.hero-prediction {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 13px;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f8fbff
+        );
+
+    border: 1px solid #dbeafe;
+
+}
+
+
+.prediction-icon {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 11px;
+
+    display: grid;
+    place-items: center;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+}
+
+
+.prediction-content {
+
+    flex: 1;
+
+}
+
+
+.prediction-content span {
+
+    display: block;
+
+    color: #64748b;
+
+    font-size: 10px;
+
+}
+
+
+.prediction-content strong {
+
+    display: block;
+
+    margin-top: 2px;
+
+    color: #15803d;
+
+    font-size: 15px;
+
+}
+
+
+.prediction-confidence {
+
+    padding: 6px 9px;
+
+    border-radius: 999px;
+
+    background: #eaf8f0;
+
+    color: #14763f;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+}
+
+
+/* =========================================================
+   FLOATING CARDS
+   ========================================================= */
+
+.hero-floating-card {
+
+    position: absolute;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 11px 14px;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    border: 1px solid #e2e8f0;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 30px rgba(30, 64, 175, 0.10);
+
+    animation: heroFloat 4s ease-in-out infinite;
+
+}
+
+
+.hero-floating-card > i {
+
+    width: 30px;
+    height: 30px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 9px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 12px;
+
+}
+
+
+.hero-floating-card span {
+
+    display: block;
+
+    color: #64748b;
+
+    font-size: 9px;
+
+}
+
+
+.hero-floating-card strong {
+
+    display: block;
+
+    margin-top: 1px;
+
+    color: #172033;
+
+    font-size: 13px;
+
+}
+
+
+.floating-top {
+
+    top: 85px;
+
+    right: -5px;
+
+}
+
+
+.floating-bottom {
+
+    bottom: 90px;
+
+    left: -10px;
+
+    animation-delay: 1.5s;
+
+}
+
+
+@keyframes heroFloat {
+
+    0%,
+    100% {
+
+        transform: translateY(0);
+
+    }
+
+    50% {
+
+        transform: translateY(-8px);
+
+    }
+
+}
+
+
+/* =========================================================
+   HERO RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .hero-right {
+
+        min-height: 500px;
+
+        padding: 20px;
+
+    }
+
+    .floating-top {
+
+        right: -10px;
+
+    }
+
+    .floating-bottom {
+
+        left: -5px;
+
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .hero-right {
+
+        min-height: auto;
+
+        margin-top: 30px;
+
+        padding: 10px 5px 30px;
+
+    }
+
+    .hero-analytics-card {
+
+        max-width: 600px;
+
+    }
+
+    .floating-top {
+
+        top: 25px;
+
+        right: -5px;
+
+    }
+
+    .floating-bottom {
+
+        bottom: 15px;
+
+        left: -5px;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .hero-right {
+
+        padding: 5px 0 25px;
+
+    }
+
+    .hero-analytics-card {
+
+        padding: 18px;
+
+        border-radius: 18px;
+
+    }
+
+    .hero-analytics-header h3 {
+
+        font-size: 16px;
+
+    }
+
+    .hero-chart {
+
+        height: 190px;
+
+    }
+
+    .hero-analytics-stats {
+
+        gap: 8px;
+
+    }
+
+    .hero-stat {
+
+        padding: 10px;
+
+    }
+
+    .hero-stat-icon {
+
+        width: 32px;
+        height: 32px;
+
+    }
+
+    .hero-stat span {
+
+        font-size: 9px;
+
+    }
+
+    .hero-stat strong {
+
+        font-size: 14px;
+
+    }
+
+    .hero-floating-card {
+
+        transform: scale(0.88);
+
+    }
+
+    .floating-top {
+
+        right: -15px;
+
+    }
+
+    .floating-bottom {
+
+        left: -15px;
+
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .hero-chart {
+
+        height: 170px;
+
+    }
+
+    .hero-analytics-stats {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .hero-prediction {
+
+        padding: 11px;
+
+    }
+
+    .prediction-confidence {
+
+        font-size: 10px;
+
+    }
+
+    .hero-floating-card {
+
+        display: none;
+
+    }
 
 }
 

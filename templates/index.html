@@ -49,49 +49,294 @@ Login
 
 <section class="hero">
 
-<div class="hero-left">
+    <div class="hero-left">
 
-<h1>
+        <h1>
 
-Smart Student Data Management &
-Analytics System
+            Smart Student Data Management &
+            Analytics System
 
-</h1>
+        </h1>
 
-<p>
+        <p>
 
-A modern platform to manage students,
-analyze academic performance,
-generate reports,
-and visualize educational data.
+            A modern platform to manage students,
+            analyze academic performance,
+            generate reports,
+            and predict academic risk using
+            machine-learning powered analytics.
 
-</p>
+        </p>
 
-<div class="hero-buttons">
+        <div class="hero-buttons">
 
-<a href="/login" class="primary-btn">
+            <a href="/login" class="primary-btn">
 
-Get Started
+                Get Started
 
-</a>
+            </a>
 
-<a href="#features" class="secondary-btn">
+            <a href="#features" class="secondary-btn">
 
-Learn More
+                Learn More
 
-</a>
+            </a>
 
-</div>
+        </div>
 
-</div>
+    </div>
 
-<div class="hero-right">
 
-<div class="circle"></div>
+    <!-- ================= HERO ANALYTICS ================= -->
 
-</div>
+    <div class="hero-right">
+
+        <div class="hero-analytics-card">
+
+            <!-- Header -->
+
+            <div class="hero-analytics-header">
+
+                <div>
+
+                    <span>Student Analytics</span>
+
+                    <h3>Academic Performance</h3>
+
+                </div>
+
+                <div class="hero-chart-icon">
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                </div>
+
+            </div>
+
+
+            <!-- Main Chart -->
+
+            <div class="hero-chart">
+
+                <div class="chart-y-axis">
+
+                    <span>100</span>
+                    <span>75</span>
+                    <span>50</span>
+                    <span>25</span>
+                    <span>0</span>
+
+                </div>
+
+
+                <div class="chart-area">
+
+                    <div class="chart-grid-line line-1"></div>
+                    <div class="chart-grid-line line-2"></div>
+                    <div class="chart-grid-line line-3"></div>
+                    <div class="chart-grid-line line-4"></div>
+
+
+                    <svg
+                        class="performance-line"
+                        viewBox="0 0 500 190"
+                        preserveAspectRatio="none"
+                    >
+
+                        <defs>
+
+                            <linearGradient
+                                id="heroGradient"
+                                x1="0"
+                                y1="0"
+                                x2="0"
+                                y2="1"
+                            >
+
+                                <stop
+                                    offset="0%"
+                                    stop-opacity="0.30"
+                                />
+
+                                <stop
+                                    offset="100%"
+                                    stop-opacity="0"
+                                />
+
+                            </linearGradient>
+
+                        </defs>
+
+
+                        <!-- Area -->
+
+                        <path
+                            class="chart-fill"
+                            d="
+                                M0,145
+                                C45,135 65,125 100,130
+                                C145,138 155,105 200,110
+                                C245,115 255,75 300,85
+                                C345,95 360,55 400,65
+                                C440,75 455,35 500,25
+                                L500,190
+                                L0,190
+                                Z
+                            "
+                        />
+
+
+                        <!-- Line -->
+
+                        <path
+                            class="chart-path"
+                            d="
+                                M0,145
+                                C45,135 65,125 100,130
+                                C145,138 155,105 200,110
+                                C245,115 255,75 300,85
+                                C345,95 360,55 400,65
+                                C440,75 455,35 500,25
+                            "
+                        />
+
+
+                        <!-- Points -->
+
+                        <circle cx="100" cy="130" r="5"/>
+                        <circle cx="200" cy="110" r="5"/>
+                        <circle cx="300" cy="85" r="5"/>
+                        <circle cx="400" cy="65" r="5"/>
+                        <circle cx="500" cy="25" r="6"/>
+
+                    </svg>
+
+
+                    <div class="chart-x-axis">
+
+                        <span>Sem 1</span>
+                        <span>Sem 2</span>
+                        <span>Sem 3</span>
+                        <span>Sem 4</span>
+                        <span>Sem 5</span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Bottom Statistics -->
+
+            <div class="hero-analytics-stats">
+
+                <div class="hero-stat">
+
+                    <div class="hero-stat-icon">
+
+                        <i class="fa-solid fa-graduation-cap"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Average CGPA</span>
+
+                        <strong>8.41</strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-stat">
+
+                    <div class="hero-stat-icon">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <span>Attendance</span>
+
+                        <strong>91%</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Prediction Card -->
+
+            <div class="hero-prediction">
+
+                <div class="prediction-icon">
+
+                    <i class="fa-solid fa-brain"></i>
+
+                </div>
+
+                <div class="prediction-content">
+
+                    <span>Academic Risk Prediction</span>
+
+                    <strong>Low Risk</strong>
+
+                </div>
+
+                <div class="prediction-confidence">
+
+                    89.3%
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Floating Analytics Badge -->
+
+        <div class="hero-floating-card floating-top">
+
+            <i class="fa-solid fa-arrow-trend-up"></i>
+
+            <div>
+
+                <span>Performance</span>
+
+                <strong>+12.4%</strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-floating-card floating-bottom">
+
+            <i class="fa-solid fa-shield-heart"></i>
+
+            <div>
+
+                <span>Prediction</span>
+
+                <strong>89.2% F1</strong>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </section>
+
+
 <!-- ================= FEATURES ================= -->
 
 <section class="features" id="features">
